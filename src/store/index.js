@@ -6,7 +6,7 @@ function changeList(list){return {
     list
 }}
 
-export const getIndexList=server=>{
+export const getIndexList=()=>{
     return (dispatch,getState,axiosInstance)=>{
         return axios.get('http://localhost:9090/api/course/list').then(res=>{
             const {list}=res.data;

@@ -1,27 +1,49 @@
 import React from 'react';
 import {renderToString} from 'react-dom/server';
-import {StaticRouter} from 'react-router-dom';
+import {StaticRouter,matchPath,Route} from 'react-router-dom';
 import express from 'express';
-import App from '../src/App.js';
+import routes from '../src/App.js';
+import Header from '../src/component/Header.js';
 import {Provider} from 'react-redux';
-import store from '../src/store/store'
+import {getServerStore} from '../src/store/store'
 
 const app=express();
+const store=getServerStore();
 app.use(express.static('public'));
 app.get('*',(req,res)=>{
-    const content=renderToString(
-        <Provider store={store}>
-        <StaticRouter location={req.url}>
-            {App}
-        </StaticRouter>
-        </Provider>
-    );
-    res.send(`<html>
-    <head><meta charset="utf-8"><title>react ssr</title></head
-    <body>
-    <div id="root">${content}</div></body>
-    <script src="/bundle.js"></script>
-    </html>`)
+    const promises=[];
+    routes.some(route=>{
+        const match=matchPath(req.path,route);
+        if(match){
+            const loadData=route.component.loadData;
+            if(loadData){
+                promises.push(loadData(store))
+            }
+        }
+        return match;
+    })
+    console.log('promises',promises);
+    Promise.all(promises).then(()=>{
+        const content=renderToString(
+            <Provider store={store}>
+            <StaticRouter location={req.url}>
+                <Header/>
+                {routes.map(route=>{
+                    return <Route {...route}></Route>
+                })}
+            </StaticRouter>
+            </Provider>
+        );
+        res.send(`<html>
+        <head><meta charset="utf-8"><title>react ssr</title></head
+        <body>
+        <div id="root">${content}</div></body>
+        <script src="/bundle.js"></script>
+        <script>window.__context=${JSON.stringify(store.getState())}</script>
+        </html>`)
+    }).catch(()=>{
+        res.send('baocuole')
+    })
 })
 
 app.listen('9093',()=>{

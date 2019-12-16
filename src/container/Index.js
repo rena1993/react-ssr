@@ -5,7 +5,10 @@ import{connect} from 'react-redux';
 function Index(props) {
     const [count, setCount] = useState(0);
     useEffect(()=>{
-        props.getIndexList()
+        if(props.list.length==0){
+            props.getIndexList()
+        }
+        
     },[])
     return <div>
         <h1>{props.greeting} kaikeba {count}</h1>
@@ -17,5 +20,10 @@ function Index(props) {
         </ul>
         </div>
 }
-
-export default connect(state=>({list:state.index.list}),{getIndexList})(Index)
+Index.loadData=(store)=>{
+    return store.dispatch(getIndexList())
+}
+export default connect(state=>{
+    console.log(state);
+        return {list:state.index.list}
+    },{getIndexList})(Index)
