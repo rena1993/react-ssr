@@ -4,12 +4,6 @@ import {getUserInfoList} from '../store/user';
 import{connect} from 'react-redux';
 
 function User(props) {
-    useEffect(()=>{
-        if(!props.userInfo.title){
-            props.getUserInfoList()
-        }
-        
-    },[])
     return <div>
         hihihi
         {props.userInfo.title}

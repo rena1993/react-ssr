@@ -38,11 +38,11 @@ app.get('*',(req,res)=>{
         <head><meta charset="utf-8"><title>react ssr</title></head
         <body>
         <div id="root">${content}</div></body>
-        <script src="/bundle.js"></script>
         <script>window.__context=${JSON.stringify(store.getState())}</script>
+        <script src="/bundle.js"></script>
         </html>`)
     }).catch(()=>{
-        res.send('baocuole')
+        res.send('505 error')
     })
 })
 
