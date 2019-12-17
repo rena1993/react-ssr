@@ -1,6 +1,16 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import App from '../src/App.js';
-
+import routes from '../src/App.js';
+import Header from '../src/component/Header.js';
+import {BrowserRouter,Route} from 'react-router-dom';
+import {getClientStore} from '../src/store/store'
+import {Provider} from 'react-redux';
 //zhu shui
-ReactDom.hydrate(App,document.getElementById('root'))
+
+const Page=<Provider store={getClientStore()}><BrowserRouter>
+    <Header></Header>
+   {routes.map(route=>{
+                    return <Route {...route}></Route>
+                })}
+</BrowserRouter></Provider>
+ReactDom.hydrate(Page,document.getElementById('root'))
