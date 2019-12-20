@@ -2,6 +2,7 @@
 import React, { useState,useEffect } from 'react';
 import {getUserInfoList} from '../store/user';
 import{connect} from 'react-redux';
+import { Redirect } from 'react-router';
 
 function User(props) {
     useEffect(()=>{
@@ -10,11 +11,12 @@ function User(props) {
         }
         
     },[])
-    return <div>
-        hihihi
-        {props.userInfo.title}
+    return <Redirect to="/about"></Redirect>
+    // return <div>
+    //     hihihi
+    //     {props.userInfo.title}
        
-        </div>
+    //     </div>
 }
 User.loadData=(store)=>{
     return store.dispatch(getUserInfoList())
