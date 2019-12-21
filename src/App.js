@@ -12,7 +12,7 @@ import Index from './container/Index';
 // )
 
 export default[
-    {path:'/',exact:true,component:Index,key:'index'},
+    {path:'/',component:Index,key:'index'},
     {path:'/about',component:About,exact:true,key:'about'},
     {path:'/user',component:User,key:'user'}
 ]

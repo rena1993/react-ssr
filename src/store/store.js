@@ -1,8 +1,14 @@
 import{createStore,applyMiddleware,combineReducers} from 'redux';
 import thunk from 'redux-thunk';
+import axios from 'axios'
 import indexReducer from './index'
 import userReducer from './user'
-
+const clientAxios=axios.create({
+    baseURL:'/'
+})
+const serverAxios=axios.create({
+    baseURL:'https://localhost:9090/'
+})
 const reducer=combineReducers({
     index:indexReducer,
     user:userReducer
@@ -11,9 +17,9 @@ const reducer=combineReducers({
 // const store=createStore(reducer,applyMiddleware(thunk))
 
 export const getServerStore=()=>{
-    return  createStore(reducer,applyMiddleware(thunk))
+    return  createStore(reducer,applyMiddleware(thunk.withExtraArgument(serverAxios)))
 }
 export const getClientStore=()=>{
     const defaultState=window.__context?window.__context:{};
-    return  createStore(reducer,defaultState,applyMiddleware(thunk))
+    return  createStore(reducer,defaultState,applyMiddleware(thunk.withExtraArgument(clientAxios)))
 }

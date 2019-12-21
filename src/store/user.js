@@ -8,7 +8,7 @@ function changeUserInfoList(data){return {
 
 export const getUserInfoList=()=>{
     return (dispatch,getState,axiosInstance)=>{
-        return axios.get('http://localhost:9090/api/user').then(res=>{
+        return axios.get('/api/user').then(res=>{
             const {data}=res.data;
             console.log('userifo1414141',data);
             dispatch(changeUserInfoList(data));

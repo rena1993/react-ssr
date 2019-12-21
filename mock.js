@@ -1,8 +1,8 @@
 const express=require('express');
 const app=express();
 app.get('/api/course/list',(req,res)=>{
-    res.header('Access-Control-Allow-Origin','*')
-    res.header('Access-Control-Allow-Method','GET,POST,PUT,DELETE,OPTION')
+    // res.header('Access-Control-Allow-Origin','*')
+    // res.header('Access-Control-Allow-Method','GET,POST,PUT,DELETE,OPTION')
     res.header('Content-Type','application/json;charset=utf-8')
     res.json({
         code:0,
@@ -15,8 +15,8 @@ app.get('/api/course/list',(req,res)=>{
     })
 })
 app.get('/api/user',(req,res)=>{
-    res.header('Access-Control-Allow-Origin','*')
-    res.header('Access-Control-Allow-Method','GET,POST,PUT,DELETE,OPTION')
+    // res.header('Access-Control-Allow-Origin','*')
+    // res.header('Access-Control-Allow-Method','GET,POST,PUT,DELETE,OPTION')
     res.header('Content-Type','application/json;charset=utf-8')
     res.json({
         code:0,
