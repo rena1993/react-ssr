@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import {getIndexList} from '../store/index';
 import{connect} from 'react-redux';
 
+import styles from './Index.css';
 function Index(props) {
     const [count, setCount] = useState(0);
     useEffect(()=>{
@@ -10,7 +11,7 @@ function Index(props) {
         }
         
     },[])
-    return <div>
+    return <div className={styles.bk}>
         <h1>{props.greeting} kaikeba {count}</h1>
         <button onClick={() => { setCount(prev => prev + 1) }}>increase</button>
         <ul>

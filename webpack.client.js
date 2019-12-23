@@ -1,5 +1,6 @@
 const path=require('path');
 const nodeExternals=require('webpack-node-externals');
+const HtmlWebpackPlugin =require('html-webpack-plugin');
 
 module.exports={
     mode:'development',
@@ -8,6 +9,10 @@ module.exports={
         filename:'bundle.js',
         path:path.resolve(__dirname,'public')
     },
+    plugins:[new HtmlWebpackPlugin({
+        filename:'index.csr.html',
+        template: 'src/index.csr.html'
+    })],
     module:{
         rules:[
             {test:/\.js$/,
@@ -20,7 +25,10 @@ module.exports={
             {
                 test:/\.css$/,
                 exclude:/node_modules/,
-                loader:['style-loader','css-loader']
+                loader:['style-loader',{
+                    loader:'css-loader',
+                    module:true
+                }]
             }
         ]
     }

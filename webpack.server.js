@@ -22,7 +22,10 @@ module.exports={
             {
                 test:/\.css$/,
                 exclude:/node_modules/,
-                loader:['isomorphic-style-loader','css-loader']
+                loader:['isomorphic-style-loader',{
+                    loader:'css-loader',
+                    module:true
+                }]
             }
         ]
     }

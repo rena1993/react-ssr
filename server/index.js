@@ -1,5 +1,5 @@
 import React from 'react';
-import {renderToString} from 'react-dom/server';
+import {renderToString, renderToStaticMarkup} from 'react-dom/server';
 import {StaticRouter,matchPath,Route,Switch, Redirect} from 'react-router-dom';
 import express from 'express';
 import routes from '../src/App.js';
@@ -7,6 +7,8 @@ import Header from '../src/component/Header.js';
 import {Provider} from 'react-redux';
 import {getServerStore} from '../src/store/store';
 import proxy from 'http-proxy-middleware';
+import fs from 'fs';
+import path from 'path';
 
 
 const app=express();
@@ -15,7 +17,17 @@ app.use(express.static('public'));
 app.use('/api/',proxy({
     target:'http://localhost:9090',changeOrigin:true
 }))
+function csrRender(res){
+    const file=path.resolve(process.cwd(),'public/index.csr.html');
+    const result=fs.readFileSync(file,'utf-8');
+    // console.log('index.csr.html',result);
+    res.send(result)
+    
+}
 app.get('*',(req,res)=>{
+    if(req.query._mode==='csr'){
+        csrRender(res)
+    }
 
     const promises=[];
     routes.some(route=>{
