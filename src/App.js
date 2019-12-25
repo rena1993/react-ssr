@@ -11,6 +11,8 @@ import Index from './container/Index';
 //     </div>
 // )
 
+
+
 export default[
     {path:'/',exact:true,component:Index,key:'index'},
     {path:'/about',component:About,exact:true,key:'about'},
