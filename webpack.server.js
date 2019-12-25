@@ -24,7 +24,9 @@ module.exports={
                 exclude:/node_modules/,
                 loader:['isomorphic-style-loader',{
                     loader:'css-loader',
-                    module:true
+                    options:{
+                        modules:true
+                    }
                 }]
             }
         ]

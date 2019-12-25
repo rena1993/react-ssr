@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import {getIndexList} from '../store/index';
 import{connect} from 'react-redux';
+import WithStyle from './WithStyle';
 
 import styles from './Index.css';
 function Index(props) {
@@ -11,8 +12,11 @@ function Index(props) {
         }
         
     },[])
+    // if(props.staticContext){
+    //     props.staticContext.css.push(styles._getCss())
+    // }
     return <div className={styles.bk}>
-        <h1>{props.greeting} kaikeba {count}</h1>
+        <h1>{props.greeting} kaike {count}</h1>
         <button onClick={() => { setCount(prev => prev + 1) }}>increase</button>
         <ul>
             {props.list.map(item=>{
@@ -27,4 +31,4 @@ Index.loadData=(store)=>{
 export default connect(state=>{
     console.log(state);
         return {list:state.index.list}
-    },{getIndexList})(Index)
+    },{getIndexList})(WithStyle(Index,styles))

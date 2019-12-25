@@ -46,7 +46,9 @@ app.get('*',(req,res)=>{
     })
     console.log('promises',promises);
     //allSettled
-    const context={};
+    const context={
+        css:[]
+    };
     Promise.all(promises).then(()=>{
         const content=renderToString(
             <Provider store={store}>
@@ -67,10 +69,12 @@ app.get('*',(req,res)=>{
         if(context.action==='REPLACE'){
             res.redirect(301, context.url);
         }
+        const css=context.css.join('');
+        console.log(css);
         res.send(`<html>
         <head><meta charset="utf-8"><title>react ssr</title></head
         <body>
-        <div id="root">${content}</div></body>
+        <div id="root">${content}</div><style>${css}</style></body>
         <script>window.__context=${JSON.stringify(store.getState())}</script>
         <script src="/bundle.js"></script>
         </html>`)
